@@ -61,13 +61,9 @@ app.use(async ctx =>{
   let time1 = new Date().getTime();
   let url = targetHost + ctx.url
   console.log(url);
-  console.log(ctx.header);
   if (ua.search('[sS]pider') == -1){
     // 将非spider的请求直接转发到原地址
     let resp = await getRequest(url, ctx);
-    if (ctx.method == "POST"){
-      console.log("ctx.body:", ctx.request.body)
-    }
     ctx.response.body = resp.body;
     // 不 set header 会存在 response.header 丢失
     ctx.response.set(resp.headers);
@@ -75,7 +71,6 @@ app.use(async ctx =>{
   }else{
     // 恢复节点
     let browserWSEndpoint = WSE_LIST[0]
-    console.log(browserWSEndpoint)
     const browser = await puppeteer.connect({browserWSEndpoint});
     
     // 开启新的标签页
