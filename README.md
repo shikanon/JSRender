@@ -2,6 +2,12 @@
 
 JSRender 是一个基于koa + puppeteer 构建的 SSR 服务端渲染 SEO 工具，可以帮助任何类型的前端渲染页面进行快速服务端渲染，从而实现SEO优化。
 
+## Document
+
+JSRender 通过劫持流量，对 UA 进行判断 spdier（搜索引擎爬虫）决定是否哪些流量需要 puppeteer 进行渲染，哪些流量直接转发。
+
+![](./docs/jsrender.png)
+
 ## Installation
 
 ### 使用 Docker 部署
