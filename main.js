@@ -74,7 +74,7 @@ app.use(async ctx =>{
     return 
   }
   // 蜘蛛检查，没有标识默认为非蜘蛛
-  if ((ua.search('[sS]pider') == -1) {
+  if (ua.search('[sS]pider') == -1) {
     // 将非spider的请求直接转发到原地址
     let resp = await getRequest(url, ctx);
     ctx.response.body = resp.body;
