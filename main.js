@@ -60,8 +60,21 @@ app.use(async ctx =>{
   let ua = ctx.header["user-agent"]
   let time1 = new Date().getTime();
   let url = targetHost + ctx.url
-  console.log(url);
-  if (ua.search('[sS]pider') == -1){
+  console.log(url, ua);
+  // 针对 header 类型直接返回200
+  if (ctx.method == "header"){
+    ctx.response.status = 200
+    return
+  }
+  // UA检查, 没有 UA 禁止访问，一方面是防止恶意爬虫攻击
+  if (ua === undefined){
+    ua = "-"
+    ctx.response.status = 403
+    ctx.response.body = "please tell me your User-Agent"
+    return 
+  }
+  // 蜘蛛检查，没有标识默认为非蜘蛛
+  if ((ua.search('[sS]pider') == -1) {
     // 将非spider的请求直接转发到原地址
     let resp = await getRequest(url, ctx);
     ctx.response.body = resp.body;
